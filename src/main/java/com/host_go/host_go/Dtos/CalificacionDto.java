@@ -10,8 +10,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CalificacionDto {
+<<<<<<< HEAD
     private long calificacion_id;
     private int estrellas;
     private String comentario;
+=======
+private long Calificacion_id;
+    private int Estrellas;
+    private String Comentario;
+>>>>>>> Andres
     private CuentaDto cuenta;
 }

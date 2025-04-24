@@ -3,5 +3,9 @@ import com.host_go.host_go.modelos.Arrendador;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ArrendadorRepositorio extends JpaRepository<Arrendador, Integer> {
+<<<<<<< HEAD
     boolean existsByCorreo(String correo); 
+=======
+
+>>>>>>> Andres
 }

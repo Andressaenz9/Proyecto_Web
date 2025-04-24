@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
+<<<<<<< HEAD
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,13 @@ import com.host_go.host_go.Repositorios.ArrendadorRepositorio;
 import com.host_go.host_go.Repositorios.CuentaRepositorio;
 import com.host_go.host_go.modelos.Arrendador;
 import com.host_go.host_go.modelos.Cuenta;
+=======
+import org.springframework.stereotype.Service;
+
+import com.host_go.host_go.Dtos.ArrendadorDto;
+import com.host_go.host_go.Repositorios.ArrendadorRepositorio;
+import com.host_go.host_go.modelos.Arrendador;
+>>>>>>> Andres
 import com.host_go.host_go.modelos.Status;
 
 @Service
@@ -24,11 +32,15 @@ public class ArrendadorServicio {
     @Autowired
     ArrendadorRepositorio arrendadorRepositorio;
     @Autowired
+<<<<<<< HEAD
     private CuentaRepositorio cuentaRepositorio;
     @Autowired
     ModelMapper modelMapper;
     @Autowired
     private PasswordEncoder passwordEncoder; 
+=======
+    ModelMapper modelMapper;
+>>>>>>> Andres
 
     public ArrendadorDto get(Integer id){
         Optional<Arrendador> arrendadorOptional = arrendadorRepositorio.findById(id);
@@ -45,6 +57,7 @@ public class ArrendadorServicio {
         return arrendadorDtos;
     }
 
+<<<<<<< HEAD
     public ArrendadorDto save(ArrendadorCreateDto arrendadorCreateDto) {
         // Validar correo único
         if (arrendadorRepositorio.existsByCorreo(arrendadorCreateDto.getCorreo())) {
@@ -76,6 +89,13 @@ public class ArrendadorServicio {
 
         // Convertir a DTO de respuesta (sin contraseña)
         ArrendadorDto arrendadorDto = modelMapper.map(arrendador, ArrendadorDto.class);
+=======
+    public ArrendadorDto save( ArrendadorDto arrendadorDto){
+        Arrendador arrendador = modelMapper.map(arrendadorDto, Arrendador.class);
+        arrendador.setStatus(Status.ACTIVE);
+        arrendador = arrendadorRepositorio.save(arrendador);
+        arrendadorDto.setCedula(arrendador.getCedula());
+>>>>>>> Andres
         return arrendadorDto;
     }
 

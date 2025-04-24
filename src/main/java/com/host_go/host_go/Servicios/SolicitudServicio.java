@@ -1,7 +1,10 @@
 package com.host_go.host_go.Servicios;
 
+<<<<<<< HEAD
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+=======
+>>>>>>> Andres
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -9,6 +12,7 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
+<<<<<<< HEAD
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +21,12 @@ import com.host_go.host_go.Repositorios.ArrendatarioRepositorio;
 import com.host_go.host_go.Repositorios.PropiedadRepositorio;
 import com.host_go.host_go.Repositorios.SolicitudRepositorio;
 import com.host_go.host_go.modelos.Propiedad;
+=======
+import org.springframework.stereotype.Service;
+
+import com.host_go.host_go.Dtos.SolicitudDto;
+import com.host_go.host_go.Repositorios.SolicitudRepositorio;
+>>>>>>> Andres
 import com.host_go.host_go.modelos.Solicitud;
 import com.host_go.host_go.modelos.Status;
 
@@ -26,10 +36,13 @@ public class SolicitudServicio {
     @Autowired
     SolicitudRepositorio SolicitudRepositorio;
     @Autowired
+<<<<<<< HEAD
     private PropiedadRepositorio propiedadRepositorio;
     @Autowired
     private ArrendatarioRepositorio arrendatarioRepositorio;
     @Autowired
+=======
+>>>>>>> Andres
     ModelMapper modelMapper;
 
     public SolicitudDto get(Long id){
@@ -48,6 +61,7 @@ public class SolicitudServicio {
     }
 
     public SolicitudDto save( SolicitudDto SolicitudDto){
+<<<<<<< HEAD
         validarFechas(SolicitudDto.getFechaInicio(), SolicitudDto.getFechaFin());
         Propiedad propiedad = validarPropiedad(SolicitudDto.getPropiedad().getPropiedad_id());
         validarArrendatario(SolicitudDto.getArrendatario().getCedula());
@@ -57,6 +71,13 @@ public class SolicitudServicio {
         solicitud.setStatus(Status.ACTIVE);
         solicitud = SolicitudRepositorio.save(solicitud);
         return modelMapper.map(solicitud, SolicitudDto.class);
+=======
+        Solicitud Solicitud = modelMapper.map(SolicitudDto, Solicitud.class);
+        Solicitud.setStatus(Status.ACTIVE);
+        Solicitud = SolicitudRepositorio.save(Solicitud);
+        SolicitudDto.setSolicitud_id(Solicitud.getSolicitud_id());
+        return SolicitudDto;
+>>>>>>> Andres
     }
 
     public SolicitudDto update (SolicitudDto SolicitudDto) throws ValidationException{
@@ -74,6 +95,7 @@ public class SolicitudServicio {
     public void delete (Long id){
         SolicitudRepositorio.deleteById(id);
     }
+<<<<<<< HEAD
     private void validarArrendatario(Integer cedula) {
         arrendatarioRepositorio.findById(cedula)
             .orElseThrow(() -> new IllegalArgumentException("Arrendatario no encontrado"));
@@ -123,4 +145,7 @@ public List<SolicitudDto> buscarSolicitudes(Long propiedadId, String cedulaArren
         .map(s -> modelMapper.map(s, SolicitudDto.class))
         .collect(Collectors.toList());
 }
+=======
+
+>>>>>>> Andres
 }
