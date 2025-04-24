@@ -60,6 +60,7 @@ public class PropiedadServicio {
     public void delete (Long id){
         PropiedadRepositorio.deleteById(id);
     }
+<<<<<<< HEAD
     
     public List<PropiedadDto> buscarPropiedades(String nombre, String ubicacion, int capacidad) {
         List<Propiedad> propiedades = PropiedadRepositorio
@@ -73,5 +74,7 @@ public class PropiedadServicio {
             .map(propiedad -> modelMapper.map(propiedad, PropiedadDto.class))
             .collect(Collectors.toList());
     }
+=======
+>>>>>>> Andres
 
 }

@@ -10,6 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ArrendadorDto {
+<<<<<<< HEAD
     private long arrendador_id;
     private Integer cedula;
     private String nombre;
@@ -17,4 +18,13 @@ public class ArrendadorDto {
     private String correo;
     private long telefono;
     private CuentaDto cuenta;
+=======
+    private Integer Cedula;
+    private String Nombre;
+    private String Apellido;
+    private String Correo;
+    private int Telefono;
+    private CuentaDto cuenta;
+
+>>>>>>> Andres
 }

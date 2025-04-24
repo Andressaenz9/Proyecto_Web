@@ -8,7 +8,10 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+<<<<<<< HEAD
 import org.springframework.web.bind.annotation.RequestParam;
+=======
+>>>>>>> Andres
 import org.springframework.web.bind.annotation.RestController;
 
 import com.host_go.host_go.Dtos.SolicitudDto;
@@ -60,6 +63,7 @@ public class SolicitudControlador {
     public void delete(@PathVariable Long id){
         SolicitudServicio.delete(id);
     }
+<<<<<<< HEAD
     @CrossOrigin
     @GetMapping(value = "/buscar", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<SolicitudDto> buscarSolicitudes(
@@ -70,5 +74,7 @@ public class SolicitudControlador {
 ) {
     return SolicitudServicio.buscarSolicitudes(propiedadId, cedulaArrendatario, fechaInicio, fechaFin);
 }
+=======
+>>>>>>> Andres
     
 }

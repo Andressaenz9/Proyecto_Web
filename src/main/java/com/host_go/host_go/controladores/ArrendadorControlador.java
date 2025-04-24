@@ -31,26 +31,30 @@ public class ArrendadorControlador {
 
     @CrossOrigin
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<ArrendadorDto> get (){
+    public List<ArrendadorDto> get() {
         return arrendadorServicio.get();
     }
 
     @CrossOrigin
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ArrendadorDto get(@PathVariable Integer id){
+    public ArrendadorDto get(@PathVariable Integer id) {
         return arrendadorServicio.get(id);
     }
 
     @CrossOrigin
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> save(@RequestBody ArrendadorCreateDto arrendadorCreateDto) {
+    public ResponseEntity<?> save(@RequestBody ArrendadorCreateDto arrendadorCreateDto) throws ValidationException {
         try {
             ArrendadorDto arrendadorDto = arrendadorServicio.save(arrendadorCreateDto);
             return ResponseEntity.ok(arrendadorDto);
         } catch (IllegalArgumentException e) {
             return ResponseEntity
                 .badRequest()
-                .body(Map.of("error", e.getMessage())); // Mensaje de error claro
+                .body(Map.of("error", e.getMessage()));
+        } catch (ValidationException e) {
+            return ResponseEntity
+                .badRequest()
+                .body(Map.of("validationError", e.getMessage()));
         } catch (Exception e) {
             return ResponseEntity
                 .internalServerError()
@@ -59,15 +63,14 @@ public class ArrendadorControlador {
     }
 
     @CrossOrigin
-    @PutMapping( produces = MediaType.APPLICATION_JSON_VALUE)
-    public ArrendadorDto update(@RequestBody ArrendadorDto arrendadorDto) throws ValidationException{
+    @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ArrendadorDto update(@RequestBody ArrendadorDto arrendadorDto) throws ValidationException {
         return arrendadorServicio.update(arrendadorDto);
     }
 
     @CrossOrigin
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public void delete(@PathVariable Integer id){
+    public void delete(@PathVariable Integer id) {
         arrendadorServicio.delete(id);
     }
-    
 }
