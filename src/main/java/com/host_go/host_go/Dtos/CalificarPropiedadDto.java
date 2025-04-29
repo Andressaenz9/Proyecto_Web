@@ -9,15 +9,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CaliPropiedadDto {
-<<<<<<< HEAD
-    private long caliPropiedad_id;
+public class CalificarPropiedadDto {
+    private long calificarPropiedad_id;
     private int estrellas;
     private String comentario;
-=======
-private long CaliPropiedad_id;
-    private int Estrellas;
-    private String Comentario;
->>>>>>> Andres
     private PropiedadDto propiedad;
 }

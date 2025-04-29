@@ -15,26 +15,16 @@ import org.hibernate.annotations.Where;
 @NoArgsConstructor
 @AllArgsConstructor
 @Where(clause = "status = 'ACTIVE'") // Filtra solo los activos
-<<<<<<< HEAD
 @SQLDelete(sql = "UPDATE arrendador SET status = 'DELETED' WHERE arrendador_id = ?") // Soft delete
 public class Arrendador {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long arrendador_id;
-=======
-@SQLDelete(sql = "UPDATE arrendador SET status = 'DELETED' WHERE cedula = ?") // Soft delete
-public class Arrendador {
-    @Id
->>>>>>> Andres
     private Integer cedula;
     private String nombre;
     private String apellido;
     private String correo;
-<<<<<<< HEAD
     private long telefono;
-=======
-    private int telefono;
->>>>>>> Andres
 
     @Enumerated(EnumType.STRING)
     private Status status = Status.ACTIVE;

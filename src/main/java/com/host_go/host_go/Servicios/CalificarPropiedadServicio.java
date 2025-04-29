@@ -5,60 +5,54 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
-import org.modelmapper.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.host_go.host_go.Dtos.CaliPropiedadDto;
-import com.host_go.host_go.Repositorios.CaliPropiedadRepositorio;
-import com.host_go.host_go.modelos.CaliPropiedad;
+import com.host_go.host_go.Dtos.CalificarPropiedadDto;
+import com.host_go.host_go.Repositorios.CalificarPropiedadRepositorio;
+import com.host_go.host_go.modelos.CalificarPropiedad;
 import com.host_go.host_go.modelos.Status;
 
 @Service
-public class CaliPropiedadServicio {
+public class CalificarPropiedadServicio {
 
     @Autowired
-    CaliPropiedadRepositorio CaliPropiedadRepositorio;
+    private CalificarPropiedadRepositorio calificarPropiedadRepositorio;
+
     @Autowired
-    ModelMapper modelMapper;
+    private ModelMapper modelMapper;
 
-    public CaliPropiedadDto get(Long id){
-        Optional<CaliPropiedad> CaliPropiedadOptional = CaliPropiedadRepositorio.findById(id);
-        CaliPropiedadDto CaliPropiedadDto = null;
-        if( CaliPropiedadOptional != null){
-            CaliPropiedadDto = modelMapper.map(CaliPropiedadOptional.get(), CaliPropiedadDto.class);
+    public CalificarPropiedadDto get(Long id) {
+        Optional<CalificarPropiedad> optional = calificarPropiedadRepositorio.findById(id);
+        return optional.map(p -> modelMapper.map(p, CalificarPropiedadDto.class)).orElse(null);
+    }
+
+    public List<CalificarPropiedadDto> get() {
+        return calificarPropiedadRepositorio.findAll().stream()
+                .map(p -> modelMapper.map(p, CalificarPropiedadDto.class))
+                .collect(Collectors.toList());
+    }
+
+    public CalificarPropiedadDto save(CalificarPropiedadDto dto) {
+        CalificarPropiedad calificacion = modelMapper.map(dto, CalificarPropiedad.class);
+        calificacion.setStatus(Status.ACTIVE);
+        calificacion = calificarPropiedadRepositorio.save(calificacion);
+        return modelMapper.map(calificacion, CalificarPropiedadDto.class);
+    }
+
+    public CalificarPropiedadDto update(CalificarPropiedadDto dto) {
+        Optional<CalificarPropiedad> optional = calificarPropiedadRepositorio.findById(dto.getCalificarPropiedad_id());
+        if (!optional.isPresent()) {
+            throw new IllegalArgumentException("Calificación de propiedad no encontrada");
         }
-        return CaliPropiedadDto;
+
+        CalificarPropiedad calificacion = modelMapper.map(dto, CalificarPropiedad.class);
+        calificacion.setStatus(Status.ACTIVE);
+        calificacion = calificarPropiedadRepositorio.save(calificacion);
+        return modelMapper.map(calificacion, CalificarPropiedadDto.class);
     }
 
-    public List<CaliPropiedadDto> get( ){
-        List<CaliPropiedad>CaliPropiedads = (List<CaliPropiedad>) CaliPropiedadRepositorio.findAll();
-        List<CaliPropiedadDto> CaliPropiedadDtos = CaliPropiedads.stream().map(CaliPropiedad -> modelMapper.map(CaliPropiedad, CaliPropiedadDto.class)).collect(Collectors.toList());
-        return CaliPropiedadDtos;
+    public void delete(Long id) {
+        calificarPropiedadRepositorio.deleteById(id);
     }
-
-    public CaliPropiedadDto save( CaliPropiedadDto CaliPropiedadDto){
-        CaliPropiedad CaliPropiedad = modelMapper.map(CaliPropiedadDto, CaliPropiedad.class);
-        CaliPropiedad.setStatus(Status.ACTIVE);
-        CaliPropiedad = CaliPropiedadRepositorio.save(CaliPropiedad);
-        CaliPropiedadDto.setCaliPropiedad_id(CaliPropiedad.getCaliPropiedad_id());
-        return CaliPropiedadDto;
-    }
-
-    public CaliPropiedadDto update (CaliPropiedadDto CaliPropiedadDto) throws ValidationException{
-        CaliPropiedadDto = get(CaliPropiedadDto.getCaliPropiedad_id());
-        if(CaliPropiedadDto == null){
-            throw new ValidationException(null);//no deja poner string "Registro indefinido" pide lista.
-        }
-        CaliPropiedad CaliPropiedad = modelMapper.map(CaliPropiedadDto, CaliPropiedad.class);
-        CaliPropiedad.setStatus(Status.ACTIVE);
-        CaliPropiedad = CaliPropiedadRepositorio.save(CaliPropiedad);
-        CaliPropiedadDto = modelMapper.map(CaliPropiedad, CaliPropiedadDto.class);
-        return CaliPropiedadDto;
-    }
-
-    public void delete (Long id){
-        CaliPropiedadRepositorio.deleteById(id);
-    }
-
 }

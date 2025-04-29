@@ -1,19 +1,12 @@
 package com.host_go.host_go.Servicios;
 
-<<<<<<< HEAD
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-=======
->>>>>>> Andres
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
-import org.modelmapper.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
-<<<<<<< HEAD
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.host_go.host_go.Dtos.SolicitudDto;
@@ -21,12 +14,6 @@ import com.host_go.host_go.Repositorios.ArrendatarioRepositorio;
 import com.host_go.host_go.Repositorios.PropiedadRepositorio;
 import com.host_go.host_go.Repositorios.SolicitudRepositorio;
 import com.host_go.host_go.modelos.Propiedad;
-=======
-import org.springframework.stereotype.Service;
-
-import com.host_go.host_go.Dtos.SolicitudDto;
-import com.host_go.host_go.Repositorios.SolicitudRepositorio;
->>>>>>> Andres
 import com.host_go.host_go.modelos.Solicitud;
 import com.host_go.host_go.modelos.Status;
 
@@ -36,70 +23,68 @@ public class SolicitudServicio {
     @Autowired
     SolicitudRepositorio SolicitudRepositorio;
     @Autowired
-<<<<<<< HEAD
     private PropiedadRepositorio propiedadRepositorio;
     @Autowired
     private ArrendatarioRepositorio arrendatarioRepositorio;
     @Autowired
-=======
->>>>>>> Andres
     ModelMapper modelMapper;
 
-    public SolicitudDto get(Long id){
-        Optional<Solicitud> SolicitudOptional = SolicitudRepositorio.findById(id);
-        SolicitudDto SolicitudDto = null;
-        if( SolicitudOptional != null){
-            SolicitudDto = modelMapper.map(SolicitudOptional.get(), SolicitudDto.class);
-        }
-        return SolicitudDto;
+    public SolicitudDto get(Long id) {
+        Solicitud solicitud = SolicitudRepositorio.findById(id).orElseThrow(() -> new IllegalArgumentException("Solicitud no encontrada"));
+        return modelMapper.map(solicitud, SolicitudDto.class);
     }
 
-    public List<SolicitudDto> get( ){
-        List<Solicitud>Solicituds = (List<Solicitud>) SolicitudRepositorio.findAll();
-        List<SolicitudDto> SolicitudDtos = Solicituds.stream().map(Solicitud -> modelMapper.map(Solicitud, SolicitudDto.class)).collect(Collectors.toList());
-        return SolicitudDtos;
+    public List<SolicitudDto> get() {
+        List<Solicitud> solicitudes = (List<Solicitud>) SolicitudRepositorio.findAll();
+        return solicitudes.stream()
+                .map(solicitud -> modelMapper.map(solicitud, SolicitudDto.class))
+                .collect(Collectors.toList());
     }
 
-    public SolicitudDto save( SolicitudDto SolicitudDto){
-<<<<<<< HEAD
-        validarFechas(SolicitudDto.getFechaInicio(), SolicitudDto.getFechaFin());
-        Propiedad propiedad = validarPropiedad(SolicitudDto.getPropiedad().getPropiedad_id());
-        validarArrendatario(SolicitudDto.getArrendatario().getCedula());
-        validarCapacidad(propiedad, SolicitudDto.getCantidadPer());
-        SolicitudDto.setCostoTotal(calcularCostoTotal(propiedad, SolicitudDto.getFechaInicio(), SolicitudDto.getFechaFin()));
-        Solicitud solicitud = modelMapper.map(SolicitudDto, Solicitud.class);
+    public SolicitudDto save(SolicitudDto solicitudDto) {
+        validarFechas(solicitudDto.getFechaInicio(), solicitudDto.getFechaFin());
+        Propiedad propiedad = validarPropiedad(solicitudDto.getPropiedad().getPropiedad_id());
+        validarArrendatario(solicitudDto.getArrendatario().getCedula());
+        validarCapacidad(propiedad, solicitudDto.getCantidadPer());
+        solicitudDto.setCostoTotal(calcularCostoTotal(propiedad, solicitudDto.getFechaInicio(), solicitudDto.getFechaFin()));
+        Solicitud solicitud = modelMapper.map(solicitudDto, Solicitud.class);
         solicitud.setStatus(Status.ACTIVE);
         solicitud = SolicitudRepositorio.save(solicitud);
         return modelMapper.map(solicitud, SolicitudDto.class);
-=======
-        Solicitud Solicitud = modelMapper.map(SolicitudDto, Solicitud.class);
-        Solicitud.setStatus(Status.ACTIVE);
-        Solicitud = SolicitudRepositorio.save(Solicitud);
-        SolicitudDto.setSolicitud_id(Solicitud.getSolicitud_id());
-        return SolicitudDto;
->>>>>>> Andres
     }
 
-    public SolicitudDto update (SolicitudDto SolicitudDto) throws ValidationException{
-        SolicitudDto = get(SolicitudDto.getSolicitud_id());
-        if(SolicitudDto == null){
-            throw new ValidationException(null);//no deja poner string "Registro indefinido" pide lista.
-        }
-        Solicitud Solicitud = modelMapper.map(SolicitudDto, Solicitud.class);
-        Solicitud.setStatus(Status.ACTIVE);
-        Solicitud = SolicitudRepositorio.save(Solicitud);
-        SolicitudDto = modelMapper.map(Solicitud, SolicitudDto.class);
-        return SolicitudDto;
+    public SolicitudDto update(SolicitudDto solicitudDto) {
+        Solicitud solicitud = SolicitudRepositorio.findById(solicitudDto.getSolicitud_id())
+                .orElseThrow(() -> new IllegalArgumentException("Solicitud no encontrada"));
+        solicitud.setStatus(Status.ACTIVE);
+        solicitud = SolicitudRepositorio.save(solicitud);
+        return modelMapper.map(solicitud, SolicitudDto.class);
     }
 
-    public void delete (Long id){
+    public void delete(Long id) {
         SolicitudRepositorio.deleteById(id);
     }
-<<<<<<< HEAD
+
+    // Método para buscar solicitudes con parámetros opcionales
+    public List<SolicitudDto> buscarSolicitudes(Long propiedadId, String cedulaArrendatario, String fechaInicio, String fechaFin) {
+        List<Solicitud> solicitudes = (List<Solicitud>) SolicitudRepositorio.findAll(); // Aquí puedes agregar la lógica para filtrar
+        
+        // Filtramos las solicitudes en función de los parámetros
+        return solicitudes.stream()
+                .filter(solicitud -> (propiedadId == null || solicitud.getPropiedad().getPropiedad_id() == propiedadId) &&
+                                     (cedulaArrendatario == null || solicitud.getArrendatario().getCedula().equals(cedulaArrendatario)) &&
+                                     (fechaInicio == null || solicitud.getFechaInicio().equals(fechaInicio)) &&
+                                     (fechaFin == null || solicitud.getFechaFin().equals(fechaFin)))
+                .map(solicitud -> modelMapper.map(solicitud, SolicitudDto.class)) // Usamos ModelMapper
+                .collect(Collectors.toList());
+    }
+
+    // Métodos de validación
     private void validarArrendatario(Integer cedula) {
         arrendatarioRepositorio.findById(cedula)
             .orElseThrow(() -> new IllegalArgumentException("Arrendatario no encontrado"));
     }
+
     private void validarFechas(String fechaInicio, String fechaFin) {
         LocalDate inicio = LocalDate.parse(fechaInicio);
         LocalDate fin = LocalDate.parse(fechaFin);
@@ -108,10 +93,12 @@ public class SolicitudServicio {
             throw new IllegalArgumentException("La fecha fin no puede ser anterior a la fecha inicio");
         }
     }
+
     private Propiedad validarPropiedad(Long propiedadId) {
         return propiedadRepositorio.findById(propiedadId)
             .orElseThrow(() -> new IllegalArgumentException("Propiedad no encontrada"));
     }
+
     private int calcularCostoTotal(Propiedad propiedad, String fechaInicio, String fechaFin) {
         long dias = ChronoUnit.DAYS.between(
             LocalDate.parse(fechaInicio),
@@ -119,33 +106,10 @@ public class SolicitudServicio {
         );
         return propiedad.getPrecio() * (int) dias;
     }
+
     private void validarCapacidad(Propiedad propiedad, int cantidadPersonas) {
         if (cantidadPersonas > propiedad.getCapacidad()) {
             throw new IllegalArgumentException("La cantidad de personas excede la capacidad de la propiedad");
         }
-}
-public List<SolicitudDto> buscarSolicitudes(Long propiedadId, String cedulaArrendatario, String fechaInicio, String fechaFin) {
-    Specification<Solicitud> spec = Specification.where(null);
-    
-    if (propiedadId != null) {
-        spec = spec.and((root, query, cb) -> 
-            cb.equal(root.get("propiedad").get("propiedad_id"), propiedadId));
     }
-    if (cedulaArrendatario != null) {
-        spec = spec.and((root, query, cb) -> 
-            cb.equal(root.get("arrendatario").get("cedula"), cedulaArrendatario));
-    }
-    if (fechaInicio != null && fechaFin != null) {
-        LocalDate inicio = LocalDate.parse(fechaInicio);
-        LocalDate fin = LocalDate.parse(fechaFin);
-        spec = spec.and((root, query, cb) -> 
-            cb.between(root.get("fechaInicio"), inicio, fin));
-    }
-    return SolicitudRepositorio.findAll(spec).stream()
-        .map(s -> modelMapper.map(s, SolicitudDto.class))
-        .collect(Collectors.toList());
-}
-=======
-
->>>>>>> Andres
 }

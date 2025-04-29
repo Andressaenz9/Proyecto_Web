@@ -8,10 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-<<<<<<< HEAD
 import org.springframework.web.bind.annotation.RequestParam;
-=======
->>>>>>> Andres
 import org.springframework.web.bind.annotation.RestController;
 
 import com.host_go.host_go.Dtos.PropiedadDto;
@@ -63,7 +60,6 @@ public class PropiedadControlador {
     public void delete(@PathVariable Long id){
         PropiedadServicio.delete(id);
     }
-<<<<<<< HEAD
 
     @GetMapping(value = "/buscar", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<PropiedadDto> buscarPropiedades(
@@ -73,7 +69,5 @@ public class PropiedadControlador {
 ) {
     return PropiedadServicio.buscarPropiedades(nombre, ubicacion, capacidad);
 }
-=======
->>>>>>> Andres
     
 }

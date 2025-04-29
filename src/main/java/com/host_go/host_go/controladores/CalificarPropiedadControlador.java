@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.host_go.host_go.Dtos.CaliPropiedadDto;
-import com.host_go.host_go.Servicios.CaliPropiedadServicio;
+import com.host_go.host_go.Dtos.CalificarPropiedadDto;
+import com.host_go.host_go.Servicios.CalificarPropiedadServicio;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,40 +24,40 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 
 @RestController
-@RequestMapping(value = "/CaliPropiedad")
-public class CaliPropiedadControlador {
+@RequestMapping(value = "/CalificarPropiedad")
+public class CalificarPropiedadControlador {
 
     @Autowired
-    private CaliPropiedadServicio CaliPropiedadServicio;
+    private CalificarPropiedadServicio CalificarPropiedadServicio;
 
     @CrossOrigin
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CaliPropiedadDto> get (){
-        return CaliPropiedadServicio.get();
+    public List<CalificarPropiedadDto> get (){
+        return CalificarPropiedadServicio.get();
     }
 
     @CrossOrigin
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CaliPropiedadDto get(@PathVariable Long id){
-        return CaliPropiedadServicio.get(id);
+    public CalificarPropiedadDto get(@PathVariable Long id){
+        return CalificarPropiedadServicio.get(id);
     }
 
     @CrossOrigin
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public CaliPropiedadDto save(@RequestBody CaliPropiedadDto CaliPropiedadDto) throws ValidationException{
-        return CaliPropiedadServicio.save(CaliPropiedadDto);
+    public CalificarPropiedadDto save(@RequestBody CalificarPropiedadDto CalificarPropiedadDto) throws ValidationException{
+        return CalificarPropiedadServicio.save(CalificarPropiedadDto);
     }
 
     @CrossOrigin
     @PutMapping( produces = MediaType.APPLICATION_JSON_VALUE)
-    public CaliPropiedadDto update(@RequestBody CaliPropiedadDto CaliPropiedadDto) throws ValidationException{
-        return CaliPropiedadServicio.update(CaliPropiedadDto);
+    public CalificarPropiedadDto update(@RequestBody CalificarPropiedadDto CalificarPropiedadDto) throws ValidationException{
+        return CalificarPropiedadServicio.update(CalificarPropiedadDto);
     }
 
     @CrossOrigin
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public void delete(@PathVariable Long id){
-        CaliPropiedadServicio.delete(id);
+        CalificarPropiedadServicio.delete(id);
     }
     
 }

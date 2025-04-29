@@ -15,24 +15,17 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Where(clause = "status = 'ACTIVE'") // Filtra solo los activos
-<<<<<<< HEAD
+@Where(clause = "status = 'ACTIVE'") // Solo registros activos
 @SQLDelete(sql = "UPDATE cuenta SET status = 'DELETED' WHERE cuenta_id = ?") // Soft delete
 public class Cuenta {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long cuenta_id;
+
     private String usuario;
+
     private String contrasena;
-=======
-@SQLDelete(sql = "UPDATE cuenta SET status = 'DELETED' WHERE cedula = ?") // Soft delete
-public class Cuenta {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long Cuenta_id;
-    private String Usuario;
-    private String Contrasena;
->>>>>>> Andres
 
     @Enumerated(EnumType.STRING)
     private Status status = Status.ACTIVE;

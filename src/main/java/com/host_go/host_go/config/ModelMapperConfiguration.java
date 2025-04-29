@@ -1,4 +1,4 @@
-package com.host_go.host_go.Config;
+package com.host_go.host_go.config;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -12,10 +12,7 @@ public class ModelMapperConfiguration {
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-<<<<<<< HEAD
-        modelMapper.getConfiguration().setAmbiguityIgnored(true);
-=======
->>>>>>> Andres
         return modelMapper;
     }
 }
+

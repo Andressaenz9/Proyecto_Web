@@ -10,12 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CuentaDto {
-<<<<<<< HEAD
     private long cuenta_id;
     private String usuario;
-=======
-    private long Cuenta_id;
-    private String Usuario;
-    private String Contrasena;
->>>>>>> Andres
+    private String contrasena;
 }

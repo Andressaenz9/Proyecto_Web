@@ -16,7 +16,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Where(clause = "status = 'ACTIVE'") // Filtra solo los activos
-<<<<<<< HEAD
 @SQLDelete(sql = "UPDATE calificacion SET status = 'DELETED' WHERE calificacion_id = ?") // Soft delete
 public class Calificacion {
     @Id
@@ -24,24 +23,11 @@ public class Calificacion {
     private long calificacion_id;
     private int estrellas;
     private String comentario;
-=======
-@SQLDelete(sql = "UPDATE calificacion SET status = 'DELETED' WHERE cedula = ?") // Soft delete
-public class Calificacion {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long Calificacion_id;
-    private int Estrellas;
-    private String Comentario;
->>>>>>> Andres
 
     @Enumerated(EnumType.STRING)
     private Status status = Status.ACTIVE;
 
     @ManyToOne
-<<<<<<< HEAD
     @JoinColumn(name = "cuenta_id")
-=======
-    @JoinColumn(name = "Cuenta_id")
->>>>>>> Andres
     private Cuenta cuenta;
 }

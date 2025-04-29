@@ -11,13 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FotoDto {
-<<<<<<< HEAD
     private long foto_id;
     private String url;
-=======
-
-    private long Foto_id;
-    private String Url;
->>>>>>> Andres
     private PropiedadDto propiedad;
 }

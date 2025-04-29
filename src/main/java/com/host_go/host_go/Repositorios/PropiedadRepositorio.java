@@ -1,6 +1,5 @@
 package com.host_go.host_go.Repositorios;
 import com.host_go.host_go.modelos.Propiedad;
-<<<<<<< HEAD
 
 import java.util.List;
 
@@ -14,10 +13,3 @@ public interface PropiedadRepositorio extends JpaRepository<Propiedad,Long>{
     );
 }
 
-=======
-import org.springframework.data.jpa.repository.JpaRepository;
-
-public interface PropiedadRepositorio extends JpaRepository<Propiedad,Long>{
-
-}
->>>>>>> Andres
